@@ -1,59 +1,91 @@
-# AIR PARADISE - Chatbot de Réservation de Vols 
+#  Air Paradise – Flight Price Prediction & Intelligent Chatbot
 
-Un chatbot intelligent pour la réservation de vols domestiques aux États-Unis, combinant Laravel, JavaScript et des modèles ML (FAISS/XGBoost).
+## Description
+Air Paradise est un projet académique combinant **Intelligence Artificielle** et **développement web**.  
+L’objectif est de prédire le prix des vols aériens et de fournir une interface interactive permettant de rechercher, comparer et réserver un vol de manière intelligente.
 
-## Fonctionnalités Clés
+Ce projet s’appuie sur :
+-  **Machine Learning (XGBoost, Scikit-learn, TensorFlow)** pour la prédiction des prix
+-  **Base de données MySQL** pour la gestion des informations
+-  **FastAPI/Flask** pour exposer une API ML
+-  **Frontend (Angular + Laravel)** pour l’interface utilisateur
 
-- **Recherche intelligente** de vols avec suggestions de villes
-- **Prédiction de prix** en temps réel via XGBoost
-- **Interface conversationnelle** intuitive
-- **Processus complet** de réservation
-- **Historique** des recherches sauvegardé
+---
 
-## Architecture Technique 
+##  Fonctionnalités
+-  Nettoyage et analyse de données réelles (dataset Kaggle + preprocessing maison)
+-  Modélisation avec **XGBoost optimisé** et recherche d’hyperparamètres
+-  Recherche de vols similaires avec **FAISS (similarité vectorielle)**
+-  Estimation du prix en temps réel
+-  Chatbot intelligent pour guider l’utilisateur dans la réservation
+-  Interface web interactive (Angular + Laravel) reliée à l’API Python
 
-    A[Frontend: JavaScript] -->|API| B[Backend: Laravel]
-    B -->|MySQL| C[(Base de Données)]
-    A -->|Requêtes| D[API ML: Flask/FAISS/XGBoost]
+---
 
-## Prérequis
-PHP 8.0+
-Composer
-Python 3.8+
-Node.js 16+
-MySQL 5.7+
+##  Technologies utilisées
+### Backend ML
+- Python 3.x
+- Pandas, Numpy, Scikit-learn, XGBoost
+- FAISS
+- Flask / FastAPI
+- Joblib
 
-## Installation 
-- **lancement du projet**:
-composer create-project laravel/laravel air-paradise-chabot
-cd air-paradise-chabot
-php serve artisan
+### Backend Web
+- PHP 8.x
+- Laravel 12.x
+- MySQL / MariaDB
 
-- **Configurer .env avec vos accès MySQL:**
-mysql -u [root] -p [laravel] < [chemin/vers/laravel.sql]
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=root
-DB_PASSWORD=
+### Frontend
+- Angular
+- Bootstrap
 
-- **API Machine Learning**
-cd faiss_python 
+---
+
+##  Structure du projet
+air-paradise/
+│── backend-ml/ # API Python (FastAPI/Flask) + modèle ML
+│── laravel-backend/ # Backend Laravel (routes, API, connexion DB)
+│── frontend/ # Interface Angular
+│── notebooks/ # Notebooks Kaggle (nettoyage + modélisation)
+│── documentation/ # PDF et docs du projet
+│── README.md # Présentation du projet
+
+
+---
+
+##  Installation & Lancement
+### 1. API ML (Python)
+```bash
+cd backend-ml
+python -m venv .venv
+.venv\Scripts\activate
 pip install -r requirements.txt
-python city_embedding.py
+python app.py
+ API disponible sur http://127.0.0.1:5000
+```
+2. Backend Laravel
+```bash
+Copier
+Modifier
+cd laravel-backend
+composer install
+copy .env.example .env
+php artisan key:generate
+php artisan serve
+ Serveur Laravel dispo sur http://127.0.0.1:8000
+```
+3. Frontend Angular
+```bash
+Copier
+Modifier
+cd frontend
+npm install
+ng serve
+ Interface sur http://localhost:4200
+```
+ Résultats (Machine Learning)
+ MAE (baseline XGBoost) : 133.33
 
-Accédez à l'application sur: http://localhost:8000
+ MAE (XGBoost optimisé) : 133.78
 
-- **Configuration des Services**
-Frontend	http://localhost:8000	8000
-API Laravel	http://localhost:8000/api	8000
-API ML	http://localhost:5000	5000
-MySQL	localhost	3306
-
-## Licence 
-Ce projet est sous licence ecole it
-
-## Auteur
-- OLIVIER DYLAN WAFO
-- ALLAL KLEIN FONGANG TENE
+ Pas d'amélioration après hyperparamétrage et RandomizedSearch
